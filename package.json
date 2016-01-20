@@ -2,10 +2,7 @@
   "name": "leadconduit-integration",
   "description": "A Node.JS utility module for building LeadConduit integrations",
   "version": "0.0.1",
-  "licenses": [{
-    "type": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International",
-    "url": "http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"
-  }],
+  "license": "CC-BY-NC-ND-4.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/activeprospect/leadconduit-integration.git"
@@ -18,10 +15,13 @@
     "prepublish": "cake build"
   },
   "dependencies": {
+    "flat": "^1.6.0",
+    "leadconduit-types": "^4.3.0"
   },
   "devDependencies": {
+    "chai": ">= 1.9.0",
     "coffee-script": ">= 1.7.0",
-    "mocha": ">= 1.17.0",
-    "chai": ">= 1.9.0"
+    "leadconduit-types": "^4.3.0",
+    "mocha": ">= 1.17.0"
   }
 }
