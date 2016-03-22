@@ -1,7 +1,7 @@
 {
   "name": "leadconduit-integration",
   "description": "A Node.JS utility module for building LeadConduit integrations",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "CC-BY-NC-ND-4.0",
   "repository": {
     "type": "git",
