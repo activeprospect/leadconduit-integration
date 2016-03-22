@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "flat": "^1.6.0",
+    "humanname": "^0.2.2",
     "leadconduit-types": "^4.3.0"
   },
   "devDependencies": {
     "chai": ">= 1.9.0",
     "coffee-script": ">= 1.7.0",
-    "leadconduit-types": "^4.3.0",
     "mocha": ">= 1.17.0"
   }
 }
