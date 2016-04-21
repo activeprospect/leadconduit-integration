@@ -80,3 +80,13 @@ describe 'Utility functions', ->
       catch err
       finally
         assert.isUndefined err
+
+    it 'should support allowing multiple methods', ->
+      invokeRequest = (method) ->
+        utils.validateRequest({method: method, headers: {'Content-Type': 'text/json'}}, ['text/json'], ['GET', 'POST'])
+      try
+        invokeRequest('GET')
+        invokeRequest('POST')
+      catch err
+      finally
+        assert.isUndefined err

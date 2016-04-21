@@ -12,11 +12,13 @@ parseFullname = (fullname) ->
   last_name: parsed.lastName
   suffix: parsed.suffix
 
-validateRequest = (req, mimeTypes) ->
+validateRequest = (req, mimeTypes, methods) ->
 
   #ensure supported method
   method = req.method?.toLowerCase()
-  if method isnt 'post'
+  supportedMethods = methods or ['POST']
+  supportedMethods = supportedMethods.map (val) -> val.toLowerCase()
+  unless supportedMethods.indexOf(method) > -1
     throw new HttpError(415, { 'Content-Type': 'text/plain', Allow: 'POST' }, "The #{method.toUpperCase()} method is not allowed")
 
   #ensure a content-type header
@@ -29,8 +31,7 @@ validateRequest = (req, mimeTypes) ->
     throw new HttpError(415, {'Content-Type': 'text/plain'}, "MIME type in Content-Type header is not supported. Use only #{mimeTypes.join ', '}")
 
 selectMimeType = (contentType, supportedTypes) ->
-  contentType = contentType or 'text/xml'
-  contentType = 'text/xml' if contentType == '*/*'
+  return unless contentType?
   mimeparse.bestMatch(supportedTypes, contentType)
 
 module.exports =
