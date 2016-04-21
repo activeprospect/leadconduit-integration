@@ -26,3 +26,57 @@ describe 'Utility functions', ->
       assert.equal parsed.first_name, "Charles"
       assert.equal parsed.middle_name, "P."
       assert.equal parsed.last_name, "Wooten"
+
+  describe 'validateRequest', ->
+
+    it 'should not error if all required data is correct', ->
+      invokeRequest = ->
+        utils.validateRequest({method: 'POST', headers: {'Content-Type': 'application/json'}}, ['application/json'])
+      try
+       invokeRequest()
+      catch err
+      finally
+        assert.isUndefined err
+
+    it 'should error if method is not POST', ->
+      invokeRequest = ->
+        utils.validateRequest({method: 'GET', headers: {'Content-Type': 'application/json'}}, ['application/json'])
+      try
+        invokeRequest()
+      catch err
+        assert.equal err.status, 415
+        assert.equal err.body, 'The GET method is not allowed'
+      finally
+        assert.isDefined err
+
+    it 'should require a Content-Type header', ->
+      invokeRequest = ->
+        utils.validateRequest({method: 'POST', headers: {}}, ['application/json'])
+      try
+        invokeRequest()
+      catch err
+        assert.equal err.status, 415
+        assert.equal err.body, 'Content-Type header is required'
+      finally
+        assert.isDefined err
+
+    it 'should require the correct Content-Type header', ->
+      invokeRequest = ->
+        utils.validateRequest({method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}}, ['application/json'])
+      try
+        invokeRequest()
+      catch err
+        assert.equal err.status, 415
+        assert.equal err.body, 'MIME type in Content-Type header is not supported. Use only application/json'
+      finally
+        assert.isDefined err
+
+    it 'should support allowing multiple Content-Types', ->
+      invokeRequest = (contentType) ->
+        utils.validateRequest({method: 'POST', headers: {'Content-Type': contentType}}, ['application/json', 'application/xml'])
+      try
+        invokeRequest('application/json')
+        invokeRequest('application/xml')
+      catch err
+      finally
+        assert.isUndefined err

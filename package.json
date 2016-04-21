@@ -17,7 +17,8 @@
   "dependencies": {
     "flat": "^1.6.0",
     "humanname": "^0.2.2",
-    "leadconduit-types": "^4.3.0"
+    "leadconduit-types": "^4.3.0",
+    "mimeparse": "^0.1.4"
   },
   "devDependencies": {
     "chai": ">= 1.9.0",
