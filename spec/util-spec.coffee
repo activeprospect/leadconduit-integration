@@ -26,6 +26,7 @@ describe 'Utility functions', ->
       assert.equal parsed.first_name, "Charles"
       assert.equal parsed.middle_name, "P."
       assert.equal parsed.last_name, "Wooten"
+      assert.equal parsed.suffix, "III"
 
   describe 'validateRequest', ->
 
