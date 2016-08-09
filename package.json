@@ -16,13 +16,15 @@
   },
   "dependencies": {
     "flat": "^1.6.0",
+    "coffee-script": ">= 1.7.0",
+    "coffeelint": "^1.15.0",
     "humanname": "^0.2.2",
     "leadconduit-types": "^4.3.0",
+    "markdown-pdf": "^7.0.0",
     "mimeparse": "^0.1.4"
   },
   "devDependencies": {
     "chai": ">= 1.9.0",
-    "coffee-script": ">= 1.7.0",
     "mocha": ">= 1.17.0"
   }
 }
