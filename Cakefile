@@ -1,1 +1,1 @@
-src/cake/index.coffee
+require('./src/cake')(task)
