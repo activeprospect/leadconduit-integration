@@ -4,19 +4,17 @@ fs = require 'fs'
 glob = require 'glob'
 log = console.log
 
-
 module.exports = (task) ->
 
   baseDir = path.resolve(path.join(__dirname, '..'))
   binDir = path.join(baseDir, 'node_modules', '.bin')
-  coffeeLintPath = path.resolve(path.join(baseDir, 'coffeelint.json'))
-
 
   task 'build', ->
     run "rm -fr ./lib; #{binDir}/coffee -o lib -c src"
 
 
   task 'lint', ->
+    coffeeLintPath = path.resolve(path.join(baseDir, 'coffeelint.json'))
     run "#{binDir}/coffeelint -f #{coffeeLintPath} src/*"
 
 
@@ -38,16 +36,15 @@ module.exports = (task) ->
       fileBaseName = path.basename(mdFile, path.extname(mdFile))
       pdfFile = "#{pdfDir}/#{fileBaseName}.#{version}.pdf"
       log "creating #{pdfFile}..."
-      run "#{binDir}/markdown-pdf #{mdFile} -o #{pdfFile}", stderr: false
+      run "#{binDir}/markdown-pdf #{mdFile} -o #{pdfFile}", stdio: [process.stdin, process.stdout, 'ignore']
 
 
-  option '-p', '--path [DIR]', 'path to test file'
+  option '-p', '--path', 'prefix for test files (prefix-string or dir/)'
   task 'test', (options) ->
-    file = options.path or ''
-    pattern = "spec/{,**/}#{file}*-spec.coffee"
+    prefix = options.path or ''
+    pattern = "spec/{,**/}#{prefix}*spec.coffee"
     log("Running tests at #{pattern}...")
-    run "NODE_ENV=test TZ=GMT #{binDir}/mocha --compilers coffee:coffee-script/register --reporter spec --colors  --recursive '#{pattern}'"
-
+    run "NODE_ENV=test TZ=GMT #{binDir}/mocha --compilers coffee:coffee-script/register --reporter spec --colors --recursive '#{pattern}'"
 
 
 run = (args...) ->
@@ -59,11 +56,12 @@ run = (args...) ->
         else options = a
       when 'function' then callback = a
 
-  command += ' ' + params.join ' ' if params?
+  options ?= {}
+  options.stdio ?= 'inherit'
+
+  command += " #{params.join} " if params?
   cmd = spawn '/bin/sh', ['-c', command], options
-  cmd.stdout.on 'data', (data) -> process.stdout.write data
-  if options?.stderr
-    cmd.stderr.on 'data', (data) -> process.stderr.write data
+
   process.on 'SIGHUP', ->
     cmd.kill()
   cmd.on 'exit', (code) ->
