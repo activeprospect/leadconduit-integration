@@ -1,1 +1,1 @@
-require('./src/cake')(task)
+require('leadconduit-cakefile')(task)
