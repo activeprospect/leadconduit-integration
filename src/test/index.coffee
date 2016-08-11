@@ -1,2 +1,1 @@
-module.exports =
-  types: require('./types')
+require('@activeprospect/indexer')(__dirname, module)
