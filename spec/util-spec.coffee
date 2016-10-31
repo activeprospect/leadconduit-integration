@@ -91,3 +91,19 @@ describe 'Utility functions', ->
       catch err
       finally
         assert.isUndefined err
+
+
+  describe 'calculateTimeout', ->
+
+    it 'returns the correct remaining timeout', ->
+      timeout = -1
+      start = new Date(new Date().getTime() - 2000) # 2s ago
+      timeout = utils.calculateTimeout(start, 4000) # 4s timeout
+      assert.closeTo timeout, 2000, 500 # .5s of wiggle-room
+
+
+    it 'returns minimum of zero', ->
+      timeout = -1
+      start = new Date(new Date().getTime() - 2000) # 2s ago
+      timeout = utils.calculateTimeout(start, 1000) # 1s timeout
+      assert.equal timeout, 0
