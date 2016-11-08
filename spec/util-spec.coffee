@@ -106,4 +106,4 @@ describe 'Utility functions', ->
       timeout = -1
       start = new Date(new Date().getTime() - 2000) # 2s ago
       timeout = utils.calculateTimeout(start, 1000) # 1s timeout
-      assert.equal timeout, 0
+      assert.equal timeout, 1

@@ -38,8 +38,9 @@ module.exports =
       throw new HttpError(415, {'Content-Type': 'text/plain'}, "MIME type in Content-Type header is not supported. Use only #{mimeTypes.join ', '}")
 
 
+  # given a starting timestamp and the total timeout (in ms), return the remaining timeout (in ms)
   calculateTimeout: (startTimestamp, timeoutMs) ->
     elapsedMs = new Date().getTime() - startTimestamp
     remaining = timeoutMs - elapsedMs
-    return 0 if remaining <= 0
+    return 1 if remaining <= 0 # the `request` library treats a timeout value of '0' as no timeout
     remaining

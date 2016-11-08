@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.4.1] - 2016-11-08
+### Fixed
+- fixed `calculateTimeout()` to return minimum of 1 (not 0)
+
 ## [0.4.0] - 2016-10-31
 ### Added
 - Added utility function `calculateTimeout()`
