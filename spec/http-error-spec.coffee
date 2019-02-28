@@ -13,7 +13,7 @@ describe 'HttpError', ->
     catch e
       stack = e.stack.split('\n')
       assert.equal stack[0], 'HttpError: integration terminated early'
-      assert.match stack[1], /spec\/http\-error\-spec\.coffee\:9\:17\)$/
+      assert.match stack[1], /at fxn.*spec\/http\-error\-spec\.coffee\:/
 
   it 'should have name', ->
     assert.equal new HttpError(500, {}, '').name, 'HttpError'
