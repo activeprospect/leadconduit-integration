@@ -7,9 +7,6 @@
     "type": "git",
     "url": "https://github.com/activeprospect/leadconduit-integration.git"
   },
-  "engines": {
-    "node": ">=0.10.0"
-  },
   "scripts": {
     "test": "cake test",
     "prepublish": "cake build"
@@ -24,6 +21,6 @@
   "devDependencies": {
     "chai": ">= 1.9.0",
     "coffee-script": ">= 1.7.0",
-    "leadconduit-cakefile": "^0.1.0"
+    "leadconduit-cakefile": "^0.3.3"
   }
 }

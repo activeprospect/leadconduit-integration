@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.0] - 2019-02-28
+### Added
+- added `stripMetadata()` to strip non-lead, non-appended data from `vars`
+
 ## [0.4.1] - 2016-11-08
 ### Fixed
 - fixed `calculateTimeout()` to return minimum of 1 (not 0)
