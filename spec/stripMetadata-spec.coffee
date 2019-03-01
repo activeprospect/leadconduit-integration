@@ -19,6 +19,8 @@ describe 'Strip metadata', ->
       source:
         id: 'source123'
         name: 'Contact Form'
+      to: 'delivery@example.com'
+      cc: 'customer@example.com'
       lead:
         id: 'lead123'
         email: types.email.parse('dee@leadgarden.com')
@@ -53,6 +55,8 @@ describe 'Strip metadata', ->
       last_name: 'Daniels'
       phone_1: '5125551212'
       trustedform_cert_url: 'https://cert.trustedform.com/cert123'
+      to: 'delivery@example.com'
+      cc: 'customer@example.com'
       suppression_list:
         query_item:
           key: 'dee@leadgarden.com'
@@ -76,6 +80,7 @@ describe 'Strip metadata', ->
       last_name: 'Daniels'
       phone_1: '5125551212'
       trustedform_cert_url: 'https://cert.trustedform.com/cert123'
+      to: 'delivery@example.com'
       suppression_list:
         add_item:
           accepted: 1
@@ -83,4 +88,4 @@ describe 'Strip metadata', ->
       anura:
         is_suspect: false
 
-    assert.deepEqual(strip(@vars, ['query_item.*', '.*.duration']), expected)
+    assert.deepEqual(strip(@vars, [new RegExp('query_item.*'), new RegExp('.*.duration'), 'cc']), expected)

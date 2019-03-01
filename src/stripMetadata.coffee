@@ -21,7 +21,8 @@ excludePatterns = [
 module.exports = (vars, additionalExcludes = []) ->
 
   for exclude in additionalExcludes
-    excludePatterns.push RegExp(exclude)
+    # \b = word-boundary, so, e.g., "cc" doesn't exclude "accept"
+    excludePatterns.push(if _.isRegExp(exclude) then exclude else RegExp("\\b#{exclude}\\b"))
 
   stripped = {}
   flatVars = flat.flatten(vars)
