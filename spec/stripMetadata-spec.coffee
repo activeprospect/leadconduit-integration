@@ -46,6 +46,8 @@ describe 'Strip metadata', ->
         outcome: 'success'
         billable: types.number.parse(1)
         is_suspect: types.boolean.parse(false)
+      leadconduit_classic:
+        id: 'classic123'
 
 
   it 'should strip basic metadata', ->
@@ -69,6 +71,8 @@ describe 'Strip metadata', ->
           duration: 0.0456
       anura:
         is_suspect: false
+      leadconduit_classic:
+        id: 'classic123'
 
     assert.deepEqual(strip(@vars), expected)
 
@@ -87,5 +91,7 @@ describe 'Strip metadata', ->
           rejected: 0
       anura:
         is_suspect: false
+      leadconduit_classic:
+        id: 'classic123'
 
     assert.deepEqual(strip(@vars, [new RegExp('query_item.*'), new RegExp('.*.duration'), 'cc']), expected)

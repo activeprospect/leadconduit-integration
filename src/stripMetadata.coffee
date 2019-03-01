@@ -29,6 +29,6 @@ module.exports = (vars, additionalExcludes = []) ->
   for key of flatVars
     if !excludePatterns.some((val) => key.match(val))
       # replace attribute, moving "lead." fields up a level
-      _.set stripped, key.replace(/^lead./, ''), flatVars[key]?.valueOf()
+      _.set stripped, key.replace(/^lead\./, ''), flatVars[key]?.valueOf()
 
   stripped
