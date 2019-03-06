@@ -1,6 +1,7 @@
 humanname = require 'humanname'
 mimeparse = require 'mimeparse'
 HttpError = require './http-error'
+stripMetadata = require './strip-metadata'
 
 selectMimeType = (contentType, supportedTypes) ->
   return unless contentType?
@@ -44,3 +45,11 @@ module.exports =
     remaining = timeoutMs - elapsedMs
     return 1 if remaining <= 0 # the `request` library treats a timeout value of '0' as no timeout
     remaining
+
+  stripMetadata: stripMetadata
+
+  getBaseUrl: (env = process.env.NODE_ENV) ->
+    switch env
+      when 'staging' then 'https://next.staging.leadconduit.com'
+      when 'development' then "http://leadconduit.localhost"
+      else 'https://next.leadconduit.com'

@@ -1,6 +1,6 @@
 assert = require('chai').assert
 types = require('leadconduit-types')
-strip = require('../src/stripMetadata')
+strip = require('../src/strip-metadata')
 
 describe 'Strip metadata', ->
 
