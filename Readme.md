@@ -2,7 +2,7 @@
 
 A Node.JS utility module for use in LeadConduit integrations.
 
-[![Build Status](https://travis-ci.org/activeprospect/leadconduit-integration.svg?branch=master)](https://travis-ci.org/activeprospect/leadconduit-integration)
+[![Build Status](https://github.com/activeprospect/leadconduit-integration/workflows/Node.js%20CI/badge.svg)](https://github.com/activeprospect/leadconduit-integration/actions)
 
 ## HttpError
 
