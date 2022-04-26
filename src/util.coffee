@@ -2,7 +2,7 @@ humanname = require 'humanname'
 mimeparse = require 'mimeparse'
 HttpError = require './http-error'
 stripMetadata = require './strip-metadata'
-get = require 'lodash'.get
+_ = require 'lodash'
 
 selectMimeType = (contentType, supportedTypes) ->
   return unless contentType?
@@ -56,9 +56,24 @@ module.exports =
       else 'https://next.leadconduit.com'
 
 
-  mask: (transactions, valuesToMask, dotpath = '0.requests.body') ->
+  mask: (transactions, valuesToMask, dotpath = 'request.body') ->
+    valuesToMaskArray = if Array.isArray(valuesToMask) then valuesToMask else new Array(valuesToMask)
 
-    toMask = get(transactions, dotpath.split('.'))
+    if /^\d/.test(dotpath) # for example, 0.request.body
+      pathsToMask = [dotpath]
+    else
+      i = 0
+      pathsToMask = []
+      transactions.forEach (transaction) ->
+        pathsToMask.push i + '.' + dotpath
+        i++
 
-    if toMask
-      toMask.replaceAll valuesToMask, '***********'
+    pathsToMask.forEach (pathToMask) ->
+      toMask = _.get(transactions, pathToMask)
+
+      if toMask
+        valuesToMaskArray.forEach (value) ->
+          regex = new RegExp(value, 'g')
+
+          toMask = toMask.replace regex, '***********'
+          _.set(transactions, pathToMask, toMask)

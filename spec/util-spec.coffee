@@ -110,21 +110,49 @@ describe 'Utility functions', ->
 
   describe.only 'mask', ->
 
-    it 'masks shit', ->
-
+    transactions = []
+    beforeEach ->
       transactions = [
         {
           request: {
             uri: 'https://test.anura.com',
-            body: 'instance=testInstanceKey&ip=192.168.255.255&source=sourceKey&campaign=campaignKey'
+            body: 'instance=testInstanceKey&ip=192.168.255.255&source=sourceKey'
           },
-          response: {
-            status: 200,
-            status_text: 'OK',
-            body: '{"outcome":"success","id":"12345"}'
-          }
+          response: {status: 200, status_text: 'OK', body: '{"outcome":"success","id":"12345"}'}
+        },
+        {
+          request: {
+            uri: 'https://test2.anura.com',
+            body: 'instance2=testInstanceKey&ip=192.168.255.255&source=sourceKey'
+          },
+          response: {status: 200, status_text: 'OK', body: '{"outcome":"success","id":"12345"}'}
         }
       ]
 
-    utils.mask(transactions);
-    assert.equal(transactions[0].request.body, 'instance=***********&ip=192.168.255.255&source=sourceKey&campaign=campaignKey');
+    it 'masks one value in each transaction, using the default path', ->
+      utils.mask(transactions, 'testInstanceKey');
+      assert.equal(transactions[0].request.body, 'instance=***********&ip=192.168.255.255&source=sourceKey');
+      assert.equal(transactions[1].request.body, 'instance2=***********&ip=192.168.255.255&source=sourceKey');
+
+    it 'masks one value in only one transaction, using a custom path', ->
+      utils.mask(transactions, 'testInstanceKey', '0.request.body');
+      assert.equal(transactions[0].request.body, 'instance=***********&ip=192.168.255.255&source=sourceKey');
+      assert.equal(transactions[1].request.body, 'instance2=testInstanceKey&ip=192.168.255.255&source=sourceKey');
+
+    it 'masks one value in each transaction, using a custom path', ->
+      utils.mask(transactions, 'test', 'request.uri');
+      assert.equal(transactions[0].request.uri, 'https://***********.anura.com');
+      assert.equal(transactions[1].request.uri, 'https://***********2.anura.com');
+
+    it 'masks one value in each transaction, with multiple occurrences', ->
+      utils.mask(transactions, 'source');
+      assert.equal(transactions[0].request.body, 'instance=testInstanceKey&ip=192.168.255.255&***********=***********Key');
+      assert.equal(transactions[1].request.body, 'instance2=testInstanceKey&ip=192.168.255.255&***********=***********Key');
+
+    xit 'masks multiple values...', ->
+      utils.mask(transactions, 'source');
+      assert.equal(transactions[0].request.body, 'instance=testInstanceKey&ip=192.168.255.255&***********=***********Key');
+
+    xit 'masks only specific path values...', ->
+      utils.mask(transactions, 'source');
+      assert.equal(transactions[0].request.body, 'instance=testInstanceKey&ip=192.168.255.255&***********=***********Key');
