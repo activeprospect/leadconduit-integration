@@ -107,3 +107,24 @@ describe 'Utility functions', ->
       start = new Date(new Date().getTime() - 2000) # 2s ago
       timeout = utils.calculateTimeout(start, 1000) # 1s timeout
       assert.equal timeout, 1
+
+  describe.only 'mask', ->
+
+    it 'masks shit', ->
+
+      transactions = [
+        {
+          request: {
+            uri: 'https://test.anura.com',
+            body: 'instance=testInstanceKey&ip=192.168.255.255&source=sourceKey&campaign=campaignKey'
+          },
+          response: {
+            status: 200,
+            status_text: 'OK',
+            body: '{"outcome":"success","id":"12345"}'
+          }
+        }
+      ]
+
+    utils.mask(transactions);
+    assert.equal(transactions[0].request.body, 'instance=***********&ip=192.168.255.255&source=sourceKey&campaign=campaignKey');

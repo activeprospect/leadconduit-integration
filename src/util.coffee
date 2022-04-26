@@ -2,6 +2,7 @@ humanname = require 'humanname'
 mimeparse = require 'mimeparse'
 HttpError = require './http-error'
 stripMetadata = require './strip-metadata'
+get = require 'lodash'.get
 
 selectMimeType = (contentType, supportedTypes) ->
   return unless contentType?
@@ -53,3 +54,11 @@ module.exports =
       when 'staging' then 'https://next.staging.leadconduit.com'
       when 'development' then "http://leadconduit.localhost"
       else 'https://next.leadconduit.com'
+
+
+  mask: (transactions, valuesToMask, dotpath = '0.requests.body') ->
+
+    toMask = get(transactions, dotpath.split('.'))
+
+    if toMask
+      toMask.replaceAll valuesToMask, '***********'
