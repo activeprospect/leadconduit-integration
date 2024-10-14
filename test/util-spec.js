@@ -60,7 +60,6 @@ describe('Utility functions', function() {
         invokeRequest();
       } catch (error) {
         err = error;
-        console.log(err);
         assert.equal(err.status, 415);
         assert.equal(err.body, 'The GET method is not allowed');
       }

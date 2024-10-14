@@ -18,7 +18,7 @@ describe('HttpError', function() {
     } catch (e) {
       const stack = e.stack.split('\n');
       assert.equal(stack[0], 'HttpError: integration terminated early');
-      return assert.match(stack[1], /at fxn.*test\/http\-error\-spec\.coffee\:/);
+      assert.match(stack[2], /at fxn.*test\/http\-error\-spec\.js\:/);
     }
   });
 
