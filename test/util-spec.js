@@ -128,7 +128,7 @@ describe('Utility functions', function() {
   });
 
 
-  return describe('calculateTimeout', function() {
+  describe('calculateTimeout', function() {
 
     it('returns the correct remaining timeout', function() {
       let timeout = -1;

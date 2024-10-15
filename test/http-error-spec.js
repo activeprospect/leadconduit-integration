@@ -9,7 +9,7 @@ describe('HttpError', function() {
     };
     try {
       fxn();
-      return assert.fail();
+      assert.fail();
     } catch (e) {
       const stack = e.stack.split('\n');
       assert.equal(stack[0], 'HttpError: integration terminated early');
