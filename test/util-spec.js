@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 const { assert } = require('chai');
 const utils = require('../lib/util');
 
@@ -35,6 +30,11 @@ describe('Utility functions', function() {
       assert.equal(parsed.middle_name, "P.");
       assert.equal(parsed.last_name, "Wooten");
       assert.equal(parsed.suffix, "III");
+    });
+
+    it('should handle parser errors by defaulting to only setting first name', function () {
+      const parsed = utils.parseFullname('Foo(Bar)');
+      assert.equal(parsed.first_name, 'Foo(Bar)');
     });
   });
 
